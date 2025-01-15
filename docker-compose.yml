@@ -1,14 +1,17 @@
 services:
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
-    environment:
-      MONGO_INITDB_DATABASE: patientdb
-
+  db:
+      image: mysql:5.7
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD: "root"
+        MYSQL_USER: "user"
+        MYSQL_PASSWORD: "password"
+        MYSQL_DATABASE: "patientdb"
+      ports:
+        - '3306:3306'
+      expose:
+        - '3306'
+      volumes:
+        - my-db:/var/lib/mysql
 volumes:
-  mongodb_data:
-    driver: local
+  my-db:
