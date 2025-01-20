@@ -6,9 +6,11 @@ import {
   deletePatientRequest,
   getAllPatientRequest,
 } from "../request/patientRequests";
+import { useNavigate } from "react-router-dom";
 
 export default function PatientTable(): JSX.Element {
   const [patients, setPatients] = useAtom(patientList);
+  const navigate = useNavigate();
 
   useEffect(() => {
     updatePatientList();
@@ -42,7 +44,10 @@ export default function PatientTable(): JSX.Element {
       </thead>
       <tbody>
         {patients.map((patient) => (
-          <tr key={patient.id}>
+          <tr
+            key={patient.id}
+            onClick={() => navigate("/patientForm/" + patient.id)}
+          >
             <td>{patient.nom}</td>
             <td>{patient.prenom}</td>
             <td>{patient.genre}</td>
@@ -53,7 +58,11 @@ export default function PatientTable(): JSX.Element {
               <div className="patienttable_action">
                 <button
                   className="patienttable_button"
-                  onClick={() => handleDelete(patient.id!).then()}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    handleDelete(patient.id!).then();
+                  }}
                 >
                   Supprimer
                 </button>

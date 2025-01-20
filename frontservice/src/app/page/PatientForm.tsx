@@ -2,7 +2,10 @@ import { JSX, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Patient from "../model/Patient";
 import "./PatientForm.scss";
-import { postPatientRequest } from "../request/patientRequests";
+import {
+  getPatientRequest,
+  postPatientRequest,
+} from "../request/patientRequests";
 
 export default function PatientForm(): JSX.Element {
   const { patientId } = useParams<{ patientId: string }>();
@@ -18,9 +21,11 @@ export default function PatientForm(): JSX.Element {
   });
 
   useEffect(() => {
-    // TODO : Fetch patient with ID if any
-    if (patientId) console.log("TODO: Fetch patient with id : ", patientId);
-    else console.log("No fetching");
+    getPatientRequest(patientId as unknown as number)
+      .then((res) => {
+        setPatientData(res);
+      })
+      .catch((err) => console.log(err));
   }, [patientId]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -6,9 +6,9 @@ export async function getAllPatientRequest(): Promise<Patient[]> {
     return patientList;
 }
 
-export async function getPatientRequest(id:number): Promise<Patient[]> {
-    const patientList = await requestMethod<Patient[]>("GET","/patients/"+id);
-    return patientList;
+export async function getPatientRequest(id:number): Promise<Patient> {
+    const patient = await requestMethod<Patient>("GET","/patients/"+id);
+    return patient;
 }
 
 export async function postPatientRequest(patient: Patient): Promise<Patient> {
