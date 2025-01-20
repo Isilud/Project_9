@@ -13,5 +13,9 @@
     color: $primary-color;
     font-size: 2em;
     flex-grow: 1;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }

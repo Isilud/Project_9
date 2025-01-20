@@ -5,6 +5,7 @@ import "./PatientForm.scss";
 import {
   getPatientRequest,
   postPatientRequest,
+  putPatientRequest,
 } from "../request/patientRequests";
 
 export default function PatientForm(): JSX.Element {
@@ -35,7 +36,10 @@ export default function PatientForm(): JSX.Element {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (patientId) console.log("TODO : Edit patient endpoint");
+    if (patientId)
+      putPatientRequest(patientData)
+        .then(() => navigate("/"))
+        .catch((err) => console.log(err));
     else
       postPatientRequest(patientData)
         .then(() => navigate("/"))

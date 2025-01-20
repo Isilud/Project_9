@@ -16,7 +16,12 @@ export async function postPatientRequest(patient: Patient): Promise<Patient> {
     return savedPatient;
 }
 
+export async function putPatientRequest(patient: Patient): Promise<Patient> {
+    const updatedPatient = await requestMethod<Patient>("PUT","/patients/"+patient.id, patient);
+    return updatedPatient;
+}
+
 export async function deletePatientRequest(id:number): Promise<Patient> {
-    const savedPatient = await requestMethod<Patient>("DELETE","/patients/"+id);
-    return savedPatient;
+    const deletedPatient = await requestMethod<Patient>("DELETE","/patients/"+id);
+    return deletedPatient;
 }

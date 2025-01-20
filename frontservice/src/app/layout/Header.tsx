@@ -15,7 +15,9 @@ export default function Header(): JSX.Element {
 
   return (
     <div className="header">
-      <span className="header_title">MédiLabo Solutions</span>
+      <span className="header_title" onClick={() => navigate("/")}>
+        MédiLabo Solutions
+      </span>
       <button onClick={loginHandle}>
         {userLogin.logged ? "Déconnexion" : "Connexion"}
       </button>
