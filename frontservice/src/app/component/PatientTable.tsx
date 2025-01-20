@@ -2,12 +2,18 @@ import { JSX, useEffect } from "react";
 import { patientList } from "../store/patientsAtom";
 import { useAtom } from "jotai";
 import "./PatientTable.scss";
+import { getAllPatientRequest } from "../request/patientRequests";
 
 export default function PatientTable(): JSX.Element {
   const [patients, setPatients] = useAtom(patientList);
 
   // TODO : Implement fetching existing patients
   useEffect(() => {
+    getAllPatientRequest()
+      .then((res) => {
+        console.log("res is ", res);
+      })
+      .catch((err) => console.log(err));
     setPatients([
       {
         nom: "Smith",
@@ -52,7 +58,7 @@ export default function PatientTable(): JSX.Element {
               <div className="patienttable_action">
                 <button
                   className="patienttable_button"
-                  onClick={() => handleDelete(patient.id)}
+                  onClick={() => handleDelete(patient.id!)}
                 >
                   Supprimer
                 </button>

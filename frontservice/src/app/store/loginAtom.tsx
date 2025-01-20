@@ -5,5 +5,5 @@ export interface UserLogin {
 }
 
 export const userLoginState = atom<UserLogin>({
-  logged: false,
+  logged: true,
 });
