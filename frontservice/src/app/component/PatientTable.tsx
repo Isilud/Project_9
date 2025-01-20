@@ -7,24 +7,12 @@ import { getAllPatientRequest } from "../request/patientRequests";
 export default function PatientTable(): JSX.Element {
   const [patients, setPatients] = useAtom(patientList);
 
-  // TODO : Implement fetching existing patients
   useEffect(() => {
     getAllPatientRequest()
       .then((res) => {
-        console.log("res is ", res);
+        setPatients(res);
       })
       .catch((err) => console.log(err));
-    setPatients([
-      {
-        nom: "Smith",
-        prenom: "John",
-        id: 0,
-        dateNaissance: "01/01/01",
-        genre: "Homme",
-        addresse: "123",
-        telephone: "0123456789",
-      },
-    ]);
   }, []);
 
   // TODO : Implement Deletion
@@ -52,8 +40,8 @@ export default function PatientTable(): JSX.Element {
             <td>{patient.prenom}</td>
             <td>{patient.genre}</td>
             <td>{patient.dateNaissance}</td>
-            <td>{patient.addresse}</td>
-            <td>{patient.telephone}</td>
+            <td>{patient.adressePostale}</td>
+            <td>{patient.numeroTelephone}</td>
             <td>
               <div className="patienttable_action">
                 <button

@@ -4,6 +4,6 @@ export default interface Patient {
   nom: string;
   dateNaissance: string;
   genre: string;
-  addresse?: string;
-  telephone?: string;
+  adressePostale?: string;
+  numeroTelephone?: string;
 }

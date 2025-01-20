@@ -13,8 +13,8 @@ export default function PatientForm(): JSX.Element {
     nom: "",
     dateNaissance: "",
     genre: "",
-    addresse: "",
-    telephone: "",
+    adressePostale: "",
+    numeroTelephone: "",
   });
 
   useEffect(() => {
@@ -81,7 +81,7 @@ export default function PatientForm(): JSX.Element {
         className="patientform_input"
         type="text"
         name="addresse"
-        value={patientData.addresse}
+        value={patientData.adressePostale}
         onChange={handleChange}
       />
 
@@ -90,7 +90,7 @@ export default function PatientForm(): JSX.Element {
         className="patientform_input"
         type="text"
         name="telephone"
-        value={patientData.telephone}
+        value={patientData.numeroTelephone}
         onChange={handleChange}
       />
 
