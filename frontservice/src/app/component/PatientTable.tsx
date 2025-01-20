@@ -2,22 +2,29 @@ import { JSX, useEffect } from "react";
 import { patientList } from "../store/patientsAtom";
 import { useAtom } from "jotai";
 import "./PatientTable.scss";
-import { getAllPatientRequest } from "../request/patientRequests";
+import {
+  deletePatientRequest,
+  getAllPatientRequest,
+} from "../request/patientRequests";
 
 export default function PatientTable(): JSX.Element {
   const [patients, setPatients] = useAtom(patientList);
 
   useEffect(() => {
-    getAllPatientRequest()
+    updatePatientList();
+  }, []);
+
+  const updatePatientList = async () => {
+    await getAllPatientRequest()
       .then((res) => {
         setPatients(res);
       })
       .catch((err) => console.log(err));
-  }, []);
+  };
 
-  // TODO : Implement Deletion
-  const handleDelete = (patientId: number) => {
-    console.log("TODO : DELETE ", patientId);
+  const handleDelete = async (patientId: number) => {
+    await deletePatientRequest(patientId).catch((err) => console.log(err));
+    await updatePatientList();
   };
 
   return (
@@ -46,7 +53,7 @@ export default function PatientTable(): JSX.Element {
               <div className="patienttable_action">
                 <button
                   className="patienttable_button"
-                  onClick={() => handleDelete(patient.id!)}
+                  onClick={() => handleDelete(patient.id!).then()}
                 >
                   Supprimer
                 </button>

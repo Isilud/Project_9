@@ -1,12 +1,12 @@
 import { JSX, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Patient from "../model/Patient";
 import "./PatientForm.scss";
 import { postPatientRequest } from "../request/patientRequests";
 
 export default function PatientForm(): JSX.Element {
   const { patientId } = useParams<{ patientId: string }>();
-  console.log(patientId);
+  const navigate = useNavigate();
 
   const [patientData, setPatientData] = useState<Patient>({
     prenom: "",
@@ -31,7 +31,10 @@ export default function PatientForm(): JSX.Element {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (patientId) console.log("TODO : Edit patient endpoint");
-    else postPatientRequest(patientData);
+    else
+      postPatientRequest(patientData)
+        .then(() => navigate("/"))
+        .catch((err) => console.log(err));
   };
 
   return (
@@ -80,7 +83,7 @@ export default function PatientForm(): JSX.Element {
       <input
         className="patientform_input"
         type="text"
-        name="addresse"
+        name="adressePostale"
         value={patientData.adressePostale}
         onChange={handleChange}
       />
@@ -89,7 +92,7 @@ export default function PatientForm(): JSX.Element {
       <input
         className="patientform_input"
         type="text"
-        name="telephone"
+        name="numeroTelephone"
         value={patientData.numeroTelephone}
         onChange={handleChange}
       />
