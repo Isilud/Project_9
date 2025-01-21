@@ -37,7 +37,7 @@ export default function PatientTable(): JSX.Element {
           <td>Prénom</td>
           <td>Genre</td>
           <td>Naissance</td>
-          <td>Addresse</td>
+          <td>Adresse</td>
           <td>Téléphone</td>
           <td></td>
         </tr>

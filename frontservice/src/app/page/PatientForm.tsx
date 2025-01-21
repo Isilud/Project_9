@@ -88,7 +88,7 @@ export default function PatientForm(): JSX.Element {
         required
       />
 
-      <label className="patientform_label">Addresse</label>
+      <label className="patientform_label">Adresse</label>
       <input
         className="patientform_input"
         type="text"

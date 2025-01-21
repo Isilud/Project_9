@@ -5,10 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
+@Table(name = "patient")
 public class Patient {
 
     @Id
@@ -36,7 +38,7 @@ public class Patient {
     @Column(name = "patient_genre")
     private String genre;
 
-    @Column(name = "patient_addresse")
+    @Column(name = "patient_adresse")
     private String adressePostale;
 
     @Column(name = "patient_telephone")
