@@ -1,0 +1,21 @@
+@import "../style/colors.scss";
+
+.header {
+  display: flex;
+  padding: 2rem;
+  border: 1px solid $black;
+  background-color: $secondary-color;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+
+  &_title {
+    color: $primary-color;
+    font-size: 2em;
+    flex-grow: 1;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

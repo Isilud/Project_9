@@ -1,0 +1,23 @@
+@import "../style/style";
+
+.patienttable {
+  border-top: 1px solid $black;
+  border-left: 1px solid $black;
+  width: 100%;
+
+  & td {
+    border-right: 1px solid $black;
+    border-bottom: 1px solid $black;
+    width: 10rem;
+  }
+
+  &_action {
+    display: flex;
+    justify-content: center;
+  }
+
+  &_button:hover {
+    color: $primary-color;
+    text-decoration: underline;
+  }
+}
