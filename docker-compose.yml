@@ -45,6 +45,18 @@ services:
         - MYSQL_URL=mysql-db:3306
       depends_on:
         - mysql-db
+  
+  noteservice:
+      build:
+        context: ./noteservice
+      ports:
+        - "8082:8082"
+      environment:
+        - SPRING_PROFILES_ACTIVE=dev
+        - MONGO_URL=mongo-db
+        - MONGO_PORT=27017
+      depends_on:
+        - mongo-db
 
 volumes:
   my-db:

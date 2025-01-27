@@ -1,0 +1,21 @@
+# Étape 1 : Construire l'application avec Maven
+FROM maven:3.9.9-eclipse-temurin-21 AS build
+
+# Copier les fichiers du projet Maven
+COPY pom.xml ./
+COPY src ./src
+
+# Construire l'application (package le .jar)
+RUN mvn clean package -DskipTests
+
+# Étape 2 : Exécuter l'application
+FROM eclipse-temurin:21-jdk
+
+# Copier le fichier JAR généré depuis l'étape précédente
+COPY --from=build /target/*.jar noteservice.jar
+
+# Exposer le port de l'application (par défaut dans Spring Boot)
+EXPOSE 8082
+
+# Démarrer l'application
+ENTRYPOINT ["java", "-jar", "noteservice.jar"]
