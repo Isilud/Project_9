@@ -15,11 +15,15 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
-    public List<Note> getNotesByPatientId(String patientId) {
-        return noteRepository.findByPatientId(patientId);
+    public List<Note> getNotesByPatientId(String noteId) {
+        return noteRepository.findByPatientId(noteId);
     }
 
     public Note addNote(Note note) {
+        return noteRepository.save(note);
+    }
+
+    public Note updateNote(Note note) {
         return noteRepository.save(note);
     }
 
