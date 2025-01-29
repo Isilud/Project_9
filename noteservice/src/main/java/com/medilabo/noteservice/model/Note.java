@@ -13,6 +13,12 @@ public class Note {
     private String patientName;
     private String text;
 
+    public Note(String patientId, String patientName, String text) {
+        this.patientId = patientId;
+        this.patientName = patientName;
+        this.text = text;
+    }
+
     public String getId() {
         return id;
     }
