@@ -32,8 +32,10 @@ services:
       - "8080:8080"
     environment:
       - PATIENT_SERVICE_URL=http://patientservice:8081
+      - NOTE_SERVICE_URL=http://noteservice:8082
     depends_on:
       - patientservice
+      - noteservice
 
   patientservice:
       build:
