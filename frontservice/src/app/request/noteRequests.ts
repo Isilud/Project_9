@@ -1,7 +1,7 @@
 import Note from "../model/Note";
 import { requestMethod } from "./requestMethod";
 
-export async function getAllNotesRequestForNote(id:number): Promise<Note[]> {
+export async function getAllNotesRequestForPatient(id:number): Promise<Note[]> {
     const notesList = await requestMethod<Note[]>("GET","/notes/"+id);
     return notesList;
 }
@@ -16,7 +16,7 @@ export async function putNoteRequest(note: Note): Promise<Note> {
     return updatedNote;
 }
 
-export async function deleteNoteRequest(id:number): Promise<Note> {
+export async function deleteNoteRequest(id:string): Promise<Note> {
     const deletedNote = await requestMethod<Note>("DELETE","/notes/"+id);
     return deletedNote;
 }

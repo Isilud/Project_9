@@ -10,12 +10,10 @@ public class Note {
     private String id;
 
     private String patientId;
-    private String patientName;
     private String text;
 
-    public Note(String patientId, String patientName, String text) {
+    public Note(String patientId, String text) {
         this.patientId = patientId;
-        this.patientName = patientName;
         this.text = text;
     }
 
@@ -33,14 +31,6 @@ public class Note {
 
     public void setPatientId(String patientId) {
         this.patientId = patientId;
-    }
-
-    public String getPatientName() {
-        return patientName;
-    }
-
-    public void setPatientName(String patientName) {
-        this.patientName = patientName;
     }
 
     public String getText() {

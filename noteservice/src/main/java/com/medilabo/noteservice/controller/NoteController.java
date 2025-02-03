@@ -35,7 +35,7 @@ public class NoteController {
     }
 
     @PutMapping("/{id}")
-    public Note updateNote(@PathVariable Integer id, @RequestBody Note note) {
+    public Note updateNote(@PathVariable String id, @RequestBody Note note) {
         return noteService.updateNote(note);
     }
 
