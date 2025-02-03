@@ -29,7 +29,7 @@ public class NoteController {
     }
 
     @GetMapping("/{patientId}")
-    public List<Note> getNotesByPatientId(@PathVariable String patientId) {
+    public List<Note> getNotesByPatientId(@PathVariable Integer patientId) {
         logger.info("Fetch request for patient with id : ", patientId);
         List<Note> notes = noteService.getNotesByPatientId(patientId);
         logger.info("Found ", notes.size(), " notes for patient with id ", patientId);

@@ -7,5 +7,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import com.medilabo.noteservice.model.Note;
 
 public interface NoteRepository extends MongoRepository<Note, String> {
-    List<Note> findByPatientId(String patientId);
+    List<Note> findByPatientId(int patientId);
 }

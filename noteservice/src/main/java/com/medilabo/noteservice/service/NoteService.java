@@ -19,7 +19,7 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
-    public List<Note> getNotesByPatientId(String noteId) {
+    public List<Note> getNotesByPatientId(int noteId) {
         List<Note> notes = noteRepository.findByPatientId(noteId);
         logger.debug("Found ", notes.size(), " notes");
         return notes;

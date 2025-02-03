@@ -9,12 +9,20 @@ public class Note {
     @Id
     private String id;
 
-    private String patientId;
+    private Integer patientId;
     private String text;
 
-    public Note(String patientId, String text) {
+    public Note(Integer patientId, String text) {
         this.patientId = patientId;
         this.text = text;
+    }
+
+    public Note(Note note) {
+        this.patientId = note.patientId;
+        this.text = note.text;
+    }
+
+    public Note() {
     }
 
     public String getId() {
@@ -25,11 +33,11 @@ public class Note {
         this.id = id;
     }
 
-    public String getPatientId() {
+    public Integer getPatientId() {
         return patientId;
     }
 
-    public void setPatientId(String patientId) {
+    public void setPatientId(Integer patientId) {
         this.patientId = patientId;
     }
 
