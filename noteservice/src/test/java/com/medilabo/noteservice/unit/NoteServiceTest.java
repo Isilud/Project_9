@@ -14,12 +14,14 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.medilabo.noteservice.model.Note;
 import com.medilabo.noteservice.repository.NoteRepository;
 import com.medilabo.noteservice.service.NoteService;
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 public class NoteServiceTest {
 
     @Mock
