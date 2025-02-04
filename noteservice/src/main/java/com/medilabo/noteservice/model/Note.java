@@ -1,9 +1,11 @@
 package com.medilabo.noteservice.model;
 
+import org.springframework.aot.generate.Generated;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "notes")
+@Generated
 public class Note {
 
     @Id

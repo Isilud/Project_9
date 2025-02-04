@@ -3,6 +3,7 @@ package com.medilabo.noteservice.configuration;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.aot.generate.Generated;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
@@ -12,6 +13,7 @@ import com.medilabo.noteservice.repository.NoteRepository;
 import jakarta.annotation.PostConstruct;
 
 @Configuration
+@Generated
 @Profile("dev") // Cette configuration est active uniquement en mode dev
 public class NoteDataConfig {
 

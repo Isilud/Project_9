@@ -1,5 +1,7 @@
 package com.medilabo.patientservice.model;
 
+import org.springframework.aot.generate.Generated;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "patient")
+@Generated
 public class Patient {
 
     @Id
