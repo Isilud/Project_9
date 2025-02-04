@@ -6,6 +6,7 @@ import { userLoginState } from "../store/loginAtom";
 import { useAtom } from "jotai";
 import LoginPage from "../page/LoginPage";
 import PatientForm from "../page/PatientForm";
+import PatientDetails from "../page/PatientDetails";
 
 export default function Main(): JSX.Element {
   const [userLogin] = useAtom(userLoginState);
@@ -17,7 +18,7 @@ export default function Main(): JSX.Element {
           <>
             <Route index element={<PatientPage />} />
             <Route path="patientForm" element={<PatientForm />} />
-            <Route path="patientForm/:patientId" element={<PatientForm />} />
+            <Route path="patientForm/:patientId" element={<PatientDetails />} />
           </>
         ) : (
           <Route index element={<LoginPage />} />

@@ -14,6 +14,18 @@ services:
       volumes:
         - my-db:/var/lib/mysql
 
+  mongo-db:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: notesdb
+    volumes:
+      - mongo-data:/data/db
+
   gateservice:
     build:
       context: ./gateservice
@@ -21,8 +33,10 @@ services:
       - "8080:8080"
     environment:
       - PATIENT_SERVICE_URL=http://patientservice:8081
+      - NOTE_SERVICE_URL=http://noteservice:8082
     depends_on:
       - patientservice
+      - noteservice
 
   patientservice:
       build:
@@ -34,6 +48,19 @@ services:
         - MYSQL_URL=mysql-db:3306
       depends_on:
         - mysql-db
+  
+  noteservice:
+      build:
+        context: ./noteservice
+      ports:
+        - "8082:8082"
+      environment:
+        - SPRING_PROFILES_ACTIVE=dev
+        - MONGO_URL=mongo-db
+        - MONGO_PORT=27017
+      depends_on:
+        - mongo-db
 
 volumes:
   my-db:
+  mongo-data:

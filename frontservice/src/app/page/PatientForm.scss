@@ -6,6 +6,7 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
   width: min-content;
+  height: min-content;
 
   &_label {
     text-wrap-mode: nowrap;
@@ -23,6 +24,14 @@
 
     &:hover {
       background-color: $secondary-color;
+      cursor: pointer;
+    }
+
+    &:disabled {
+      background-color: lightgray;
+      &:hover {
+        cursor: default;
+      }
     }
   }
 }
