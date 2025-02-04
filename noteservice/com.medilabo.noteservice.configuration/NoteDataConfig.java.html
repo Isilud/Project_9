@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>NoteDataConfig.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">MedilaboProject</a> &gt; <a href="../index.html" class="el_bundle">noteservice</a> &gt; <a href="index.source.html" class="el_package">com.medilabo.noteservice.configuration</a> &gt; <span class="el_source">NoteDataConfig.java</span></div><h1>NoteDataConfig.java</h1><pre class="source lang-java linenums">package com.medilabo.noteservice.configuration;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+
+import com.medilabo.noteservice.model.Note;
+import com.medilabo.noteservice.repository.NoteRepository;
+
+import jakarta.annotation.PostConstruct;
+
+@Configuration
+@Profile(&quot;dev&quot;) // Cette configuration est active uniquement en mode dev
+public class NoteDataConfig {
+
+        private final NoteRepository noteRepository;
+
+<span class="nc" id="L20">        public NoteDataConfig(NoteRepository noteRepository) {</span>
+<span class="nc" id="L21">                this.noteRepository = noteRepository;</span>
+<span class="nc" id="L22">        }</span>
+
+        @PostConstruct
+        public void insertTestData() {
+<span class="nc" id="L26">                List&lt;Note&gt; testData = Arrays.asList(</span>
+<span class="nc" id="L27">                                new Note(1,</span>
+                                                &quot;Le patient déclare qu'il 'se sent très bien' Poids égal ou inférieur au poids recommandé&quot;),
+<span class="nc" id="L29">                                new Note(2,</span>
+                                                &quot; Le patient déclare qu'il ressent beaucoup de stress au travail Il se plaint également que son audition est anormale dernièrement&quot;),
+<span class="nc" id="L31">                                new Note(2,</span>
+                                                &quot;Le patient déclare avoir fait une réaction aux médicaments au cours des 3 derniers mois Il remarque également que son audition continue d'être anormale&quot;),
+<span class="nc" id="L33">                                new Note(3,</span>
+                                                &quot;Le patient déclare qu'il fume depuis peu&quot;),
+<span class="nc" id="L35">                                new Note(3,</span>
+                                                &quot;Le patient déclare qu'il est fumeur et qu'il a cessé de fumer l'année dernière Il se plaint également de crises d’apnée respiratoire anormales Tests de laboratoire indiquant un taux de cholestérol LDL élevé&quot;),
+<span class="nc" id="L37">                                new Note(4,</span>
+                                                &quot;Le patient déclare qu'il lui est devenu difficile de monter les escaliers Il se plaint également d’être essoufflé Tests de laboratoire indiquant que les anticorps sont élevés Réaction aux médicaments&quot;),
+<span class="nc" id="L39">                                new Note(4,</span>
+                                                &quot;Le patient déclare qu'il a mal au dos lorsqu'il reste assis pendant longtemps&quot;),
+<span class="nc" id="L41">                                new Note(4,</span>
+                                                &quot;Le patient déclare avoir commencé à fumer depuis peu Hémoglobine A1C supérieure au niveau recommandé&quot;),
+<span class="nc" id="L43">                                new Note(4,</span>
+                                                &quot;Taille, Poids, Cholestérol, Vertige et Réaction&quot;));
+
+<span class="nc" id="L46">                noteRepository.saveAll(testData);</span>
+<span class="nc" id="L47">        }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

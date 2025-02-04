@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>Patient.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">MedilaboProject</a> &gt; <a href="../index.html" class="el_bundle">patientservice</a> &gt; <a href="index.source.html" class="el_package">com.medilabo.patientservice.model</a> &gt; <span class="el_source">Patient.java</span></div><h1>Patient.java</h1><pre class="source lang-java linenums">package com.medilabo.patientservice.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+@Entity
+@Table(name = &quot;patient&quot;)
+public class Patient {
+
+    @Id
+    @Column(name = &quot;patient_id&quot;)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @NotNull
+    @Size(min = 1)
+    @Column(name = &quot;patient_prenom&quot;)
+    private String prenom;
+
+    @NotNull
+    @Size(min = 1)
+    @Column(name = &quot;patient_nom&quot;)
+    private String nom;
+
+    @NotNull
+    @Size(min = 1)
+    @Column(name = &quot;patient_naissance&quot;)
+    private String dateNaissance;
+
+    @NotNull
+    @Size(min = 1)
+    @Column(name = &quot;patient_genre&quot;)
+    private String genre;
+
+    @Column(name = &quot;patient_adresse&quot;)
+    private String adressePostale;
+
+    @Column(name = &quot;patient_telephone&quot;)
+    private String numeroTelephone;
+
+<span class="fc" id="L47">    public Patient() {</span>
+<span class="fc" id="L48">    }</span>
+
+    public Patient(String prenom, String nom, String dateNaissance, String genre, String adressePostale,
+<span class="fc" id="L51">            String numeroTelephone) {</span>
+<span class="fc" id="L52">        this.prenom = prenom;</span>
+<span class="fc" id="L53">        this.nom = nom;</span>
+<span class="fc" id="L54">        this.dateNaissance = dateNaissance;</span>
+<span class="fc" id="L55">        this.genre = genre;</span>
+<span class="fc" id="L56">        this.adressePostale = adressePostale;</span>
+<span class="fc" id="L57">        this.numeroTelephone = numeroTelephone;</span>
+<span class="fc" id="L58">    }</span>
+
+<span class="fc" id="L60">    public Patient(Patient p) {</span>
+<span class="fc" id="L61">        this.prenom = p.prenom;</span>
+<span class="fc" id="L62">        this.nom = p.nom;</span>
+<span class="fc" id="L63">        this.dateNaissance = p.dateNaissance;</span>
+<span class="fc" id="L64">        this.genre = p.genre;</span>
+<span class="fc" id="L65">        this.adressePostale = p.adressePostale;</span>
+<span class="fc" id="L66">        this.numeroTelephone = p.numeroTelephone;</span>
+<span class="fc" id="L67">    }</span>
+
+    public Integer getId() {
+<span class="fc" id="L70">        return id;</span>
+    }
+
+    public void setId(Integer id) {
+<span class="fc" id="L74">        this.id = id;</span>
+<span class="fc" id="L75">    }</span>
+
+    public String getPrenom() {
+<span class="fc" id="L78">        return prenom;</span>
+    }
+
+    public void setPrenom(String prenom) {
+<span class="fc" id="L82">        this.prenom = prenom;</span>
+<span class="fc" id="L83">    }</span>
+
+    public String getNom() {
+<span class="fc" id="L86">        return nom;</span>
+    }
+
+    public void setNom(String nom) {
+<span class="fc" id="L90">        this.nom = nom;</span>
+<span class="fc" id="L91">    }</span>
+
+    public String getDateNaissance() {
+<span class="fc" id="L94">        return dateNaissance;</span>
+    }
+
+    public void setDateNaissance(String dateNaissance) {
+<span class="fc" id="L98">        this.dateNaissance = dateNaissance;</span>
+<span class="fc" id="L99">    }</span>
+
+    public String getGenre() {
+<span class="fc" id="L102">        return genre;</span>
+    }
+
+    public void setGenre(String genre) {
+<span class="fc" id="L106">        this.genre = genre;</span>
+<span class="fc" id="L107">    }</span>
+
+    public String getAdressePostale() {
+<span class="fc" id="L110">        return adressePostale;</span>
+    }
+
+    public void setAdressePostale(String adressePostale) {
+<span class="fc" id="L114">        this.adressePostale = adressePostale;</span>
+<span class="fc" id="L115">    }</span>
+
+    public String getNumeroTelephone() {
+<span class="fc" id="L118">        return numeroTelephone;</span>
+    }
+
+    public void setNumeroTelephone(String numeroTelephone) {
+<span class="fc" id="L122">        this.numeroTelephone = numeroTelephone;</span>
+<span class="fc" id="L123">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

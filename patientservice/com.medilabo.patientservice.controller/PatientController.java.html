@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>PatientController.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">MedilaboProject</a> &gt; <a href="../index.html" class="el_bundle">patientservice</a> &gt; <a href="index.source.html" class="el_package">com.medilabo.patientservice.controller</a> &gt; <span class="el_source">PatientController.java</span></div><h1>PatientController.java</h1><pre class="source lang-java linenums">package com.medilabo.patientservice.controller;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import com.medilabo.patientservice.model.Patient;
+import com.medilabo.patientservice.service.PatientService;
+
+import jakarta.validation.Valid;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/patients&quot;)
+<span class="fc" id="L17">public class PatientController {</span>
+
+<span class="fc" id="L19">    private final Logger logger = LoggerFactory.getLogger(PatientController.class);</span>
+
+    @Autowired
+    private PatientService patientService;
+
+    @PostMapping
+    public Patient addPatient(@Valid @RequestBody Patient patient) {
+<span class="fc" id="L26">        logger.info(&quot;Save request for new patient&quot;);</span>
+<span class="fc" id="L27">        Patient registeredPatient = patientService.addPatient(patient);</span>
+<span class="fc" id="L28">        logger.info(&quot;Saved patient with id : &quot;, patient.getId());</span>
+<span class="fc" id="L29">        return registeredPatient;</span>
+    }
+
+    @GetMapping
+    public List&lt;Patient&gt; getAllPatients() {
+<span class="fc" id="L34">        logger.info(&quot;Fetch request for all patients&quot;);</span>
+<span class="fc" id="L35">        return patientService.getAllPatients();</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public Patient getPatientById(@PathVariable Integer id) {
+<span class="fc" id="L40">        logger.info(&quot;Fetch request for patient with id : &quot;, id);</span>
+<span class="fc" id="L41">        Patient foundPatient = patientService.getPatientById(id);</span>
+<span class="fc" id="L42">        logger.info(&quot;Patient found : &quot;, id);</span>
+<span class="fc" id="L43">        return foundPatient;</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    public Patient updatePatient(@PathVariable Integer id, @Valid @RequestBody Patient patient) {
+<span class="fc" id="L48">        logger.info(&quot;Update request for patient with id : &quot;, id);</span>
+<span class="fc" id="L49">        patient.setId(id);</span>
+<span class="fc" id="L50">        Patient updatedPatient = patientService.updatePatient(patient);</span>
+<span class="fc" id="L51">        logger.info(&quot;Patient updated with id : &quot;, id);</span>
+<span class="fc" id="L52">        return updatedPatient;</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public void deletePatient(@PathVariable Integer id) {
+<span class="fc" id="L57">        logger.info(&quot;Delete request for patient with id : &quot;, id);</span>
+<span class="fc" id="L58">        patientService.deletePatient(id);</span>
+<span class="fc" id="L59">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
