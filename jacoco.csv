@@ -4,7 +4,6 @@ MedilaboProject/patientservice,com.medilabo.patientservice.controller,PatientCon
 MedilaboProject/patientservice,com.medilabo.patientservice.controller,ControllerExceptionHandler,0,19,0,0,0,4,0,2,0,2
 MedilaboProject/patientservice,com.medilabo.patientservice.exception,PatientNotFoundException,0,14,0,0,0,4,0,1,0,1
 MedilaboProject/patientservice,com.medilabo.patientservice,PatientserviceApplication,5,3,0,0,2,1,1,1,1,1
-MedilaboProject/patientservice,com.medilabo.patientservice.repository,PatientRepository,57,0,0,0,3,0,1,0,1,0
 MedilaboProject/noteservice,com.medilabo.noteservice,NoteserviceApplication,5,3,0,0,2,1,1,1,1,1
 MedilaboProject/noteservice,com.medilabo.noteservice.controller,NoteController,0,88,0,0,0,19,0,5,0,5
 MedilaboProject/noteservice,com.medilabo.noteservice.service,NoteService,0,61,0,0,0,16,0,5,0,5
