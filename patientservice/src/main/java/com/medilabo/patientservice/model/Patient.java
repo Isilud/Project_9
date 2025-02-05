@@ -1,15 +1,9 @@
 package com.medilabo.patientservice.model;
 
 import org.springframework.aot.generate.Generated;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "patient")
@@ -32,14 +26,12 @@ public class Patient {
     private String nom;
 
     @NotNull
-    @Size(min = 1)
     @Column(name = "patient_naissance")
-    private String dateNaissance;
+    private LocalDate dateNaissance;
 
     @NotNull
-    @Size(min = 1)
     @Column(name = "patient_genre")
-    private String genre;
+    private char genre;
 
     @Column(name = "patient_adresse")
     private String adressePostale;
@@ -50,7 +42,7 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(String prenom, String nom, String dateNaissance, String genre, String adressePostale,
+    public Patient(String prenom, String nom, LocalDate dateNaissance, char genre, String adressePostale,
             String numeroTelephone) {
         this.prenom = prenom;
         this.nom = nom;
@@ -93,19 +85,19 @@ public class Patient {
         this.nom = nom;
     }
 
-    public String getDateNaissance() {
+    public LocalDate getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(String dateNaissance) {
+    public void setDateNaissance(LocalDate dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 
-    public String getGenre() {
+    public char getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(char genre) {
         this.genre = genre;
     }
 

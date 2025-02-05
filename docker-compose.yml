@@ -34,15 +34,15 @@ services:
     environment:
       - PATIENT_SERVICE_URL=http://patientservice:8081
       - NOTE_SERVICE_URL=http://noteservice:8082
+      - DIAGNOSTIC_SERVICE_URL=http://noteservice:8083
     depends_on:
       - patientservice
       - noteservice
+      - diagnosticservice
 
   patientservice:
       build:
         context: ./patientservice
-      ports:
-        - "8081:8081"
       environment:
         - SPRING_PROFILES_ACTIVE=dev
         - MYSQL_URL=mysql-db:3306
@@ -52,14 +52,21 @@ services:
   noteservice:
       build:
         context: ./noteservice
-      ports:
-        - "8082:8082"
       environment:
         - SPRING_PROFILES_ACTIVE=dev
         - MONGO_URL=mongo-db
         - MONGO_PORT=27017
       depends_on:
         - mongo-db
+
+  diagnosticservice:
+      build:
+        context: ./diagnosticservice
+      environment:
+        - SPRING_PROFILES_ACTIVE=dev
+      depends_on:
+        - patientservice
+        - noteservice
 
 volumes:
   my-db:

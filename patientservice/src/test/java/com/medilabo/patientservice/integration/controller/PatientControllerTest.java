@@ -17,6 +17,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDate;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.medilabo.patientservice.model.Patient;
 import com.medilabo.patientservice.repository.PatientRepository;
@@ -42,14 +44,16 @@ public class PatientControllerTest {
         @BeforeEach
         public void setup() {
                 patientRepository.deleteAll();
-                patient1 = patientRepository.save(new Patient("John", "Doe", "01/01/01", "Homme", "123", "0123456789"));
-                patient2 = patientRepository.save(new Patient("Jane", "Doe", "02/02/02", "Femme", "456", "9876543210"));
+                patient1 = patientRepository
+                                .save(new Patient("John", "Doe", LocalDate.of(1, 1, 1), 'H', "123", "0123456789"));
+                patient2 = patientRepository.save(new Patient("Jane", "Doe",
+                                LocalDate.of(2, 2, 2), 'F', "456", "9876543210"));
                 System.out.println(patientRepository.findAll());
         }
 
         @Test
         public void testAddPatient() throws Exception {
-                Patient patient = new Patient("New", "Patient", "01/01/01", "Homme", "123", "0123456789");
+                Patient patient = new Patient("New", "Patient", LocalDate.of(1, 1, 1), 'H', "123", "0123456789");
                 mockMvc.perform(post("/patients")
                                 .content(objectMapper.writeValueAsString(patient))
                                 .contentType(MediaType.APPLICATION_JSON))
