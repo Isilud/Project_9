@@ -1,0 +1,33 @@
+# Étape 1: Build de l'application avec Vite
+FROM node:18-alpine AS build
+
+WORKDIR /app
+
+# Copier les fichiers package.json et package-lock.json
+COPY package*.json ./
+
+# Installer les dépendances
+RUN npm install --frozen-lockfile
+
+# Copier le reste du projet
+COPY . .
+
+# Build de l'application
+RUN npm run build
+
+# Étape 2: Exécution de l'application avec un serveur Vite
+FROM node:18-alpine AS runtime
+
+WORKDIR /app
+
+# Copier les fichiers buildés et les dépendances essentielles
+COPY --from=build /app /app
+
+# Réinstaller uniquement les dépendances de production pour alléger l'image
+RUN npm ci
+
+# Exposer le port Vite par défaut
+EXPOSE 4173
+
+# Lancer l'application Vite en mode preview
+CMD ["npm", "run", "preview"]

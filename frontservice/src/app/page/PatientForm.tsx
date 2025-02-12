@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { JSX, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Patient from "../model/Patient";
@@ -19,16 +20,12 @@ export default function PatientForm({
     prenom: "",
     nom: "",
     dateNaissance: "",
-    genre: "",
+    genre: "M",
     adressePostale: "",
     numeroTelephone: "",
   });
 
   const [isDirty, setIsDirty] = useState<boolean>(false);
-
-  useEffect(() => {
-    updatePatient();
-  }, [patientId]);
 
   const updatePatient = () => {
     if (patientId)
@@ -39,9 +36,18 @@ export default function PatientForm({
         .catch((err) => console.log(err));
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    updatePatient();
+  }, [patientId, updatePatient]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setPatientData({ ...patientData, [name]: value });
+    setPatientData({
+      ...patientData,
+      [name]: name === "dateNaissance" ? value : value.trim(),
+    });
     setIsDirty(true);
   };
 
@@ -83,7 +89,7 @@ export default function PatientForm({
       <label className="patientform_label">Date de Naissance</label>
       <input
         className="patientform_input"
-        type="text"
+        type="date"
         name="dateNaissance"
         value={patientData.dateNaissance}
         onChange={handleChange}
@@ -91,14 +97,16 @@ export default function PatientForm({
       />
 
       <label className="patientform_label">Genre</label>
-      <input
+      <select
         className="patientform_input"
-        type="text"
         name="genre"
         value={patientData.genre}
         onChange={handleChange}
         required
-      />
+      >
+        <option value="M">Masculin</option>
+        <option value="F">Féminin</option>
+      </select>
 
       <label className="patientform_label">Adresse</label>
       <input
@@ -112,7 +120,7 @@ export default function PatientForm({
       <label className="patientform_label">Téléphone</label>
       <input
         className="patientform_input"
-        type="text"
+        type="tel"
         name="numeroTelephone"
         value={patientData.numeroTelephone}
         onChange={handleChange}

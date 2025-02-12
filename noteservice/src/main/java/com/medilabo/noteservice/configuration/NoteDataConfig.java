@@ -25,6 +25,7 @@ public class NoteDataConfig {
 
         @PostConstruct
         public void insertTestData() {
+                noteRepository.deleteAll();
                 List<Note> testData = Arrays.asList(
                                 new Note(1,
                                                 "Le patient déclare qu'il 'se sent très bien' Poids égal ou inférieur au poids recommandé"),
@@ -43,7 +44,7 @@ public class NoteDataConfig {
                                 new Note(4,
                                                 "Le patient déclare avoir commencé à fumer depuis peu Hémoglobine A1C supérieure au niveau recommandé"),
                                 new Note(4,
-                                                "Taille, Poids, Cholestérol, Vertige et Réaction"));
+                                                "Taille, Poids, Cholestérol, Vertiges et Réaction"));
 
                 noteRepository.saveAll(testData);
         }

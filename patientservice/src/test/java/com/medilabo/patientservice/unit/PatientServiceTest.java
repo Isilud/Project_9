@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +37,7 @@ public class PatientServiceTest {
     @Test
     public void testAddPatient() {
         // Given
-        Patient patient = new Patient("John", "Doe", "01/01/01", "Homme", "123", "0123456789");
-        patient.setId(1);
+        Patient patient = new Patient("John", "Doe", LocalDate.of(1, 1, 1), 'H', "123", "0123456789");
 
         // When
         when(patientRepository.save(patient)).thenReturn(patient);
@@ -52,11 +52,10 @@ public class PatientServiceTest {
     @Test
     public void testGetAllPatients() {
         // Given
-        Patient patient1 = new Patient("John", "Doe", "01/01/01", "Homme", "123", "0123456789");
-        patient1.setId(1);
+        Patient patient1 = new Patient("John", "Doe", LocalDate.of(1, 1, 1), 'H', "123", "0123456789");
 
-        Patient patient2 = new Patient("Jane", "Doe", "02/02/02", "Femme", "456", "9876543210");
-        patient2.setId(2);
+        Patient patient2 = new Patient("Jane", "Doe",
+                LocalDate.of(2, 2, 2), 'F', "456", "9876543210");
 
         // When
         when(patientRepository.findAll()).thenReturn(Arrays.asList(patient1, patient2));
@@ -72,8 +71,7 @@ public class PatientServiceTest {
     @Test
     public void testGetPatientById_Found() {
         // Given
-        Patient patient = new Patient("John", "Doe", "01/01/01", "Homme", "123", "0123456789");
-        patient.setId(1);
+        Patient patient = new Patient("John", "Doe", LocalDate.of(1, 1, 1), 'H', "123", "0123456789");
 
         // When
         when(patientRepository.findById(1)).thenReturn(Optional.of(patient));
@@ -96,8 +94,7 @@ public class PatientServiceTest {
     @Test
     public void testUpdatePatient() {
         // Given
-        Patient patient = new Patient("John", "Doe", "01/01/01", "Homme", "123", "0123456789");
-        patient.setId(1);
+        Patient patient = new Patient("John", "Doe", LocalDate.of(1, 1, 1), 'H', "123", "0123456789");
 
         // When
         when(patientRepository.save(patient)).thenReturn(patient);
