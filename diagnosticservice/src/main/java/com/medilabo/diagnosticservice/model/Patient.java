@@ -15,6 +15,11 @@ public class Patient {
     public Patient() {
     }
 
+    public Patient(LocalDate dateNaissance, char genre) {
+        this.dateNaissance = dateNaissance;
+        this.genre = genre;
+    }
+
     public LocalDate getDateNaissance() {
         return dateNaissance;
     }
