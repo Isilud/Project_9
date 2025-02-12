@@ -39,35 +39,32 @@ public class DiagnosticService {
             "Anticorps");
 
     public DiagnosticLevel getLevel(Integer patientId) {
-        Note[] notes = gateServiceClient.getDiagnostics(patientId);
+        List<Note> notes = gateServiceClient.getDiagnostics(patientId);
         Patient patient = gateServiceClient.getPatient(patientId);
-        logger.debug("Found ", notes.length, " notes for patient ", patientId);
+        logger.debug("Found " + notes.size() + " notes for patient " + patientId);
         Set<String> foundKeywords = new HashSet<>();
         for (String keyword : keywords) {
             for (Note note : notes) {
                 String text = note.getText().toLowerCase();
                 if (text.contains(keyword.toLowerCase())) {
+                    logger.debug("Found " + keyword);
                     foundKeywords.add(keyword);
                     break;
                 }
             }
         }
-        int keywordsNumber = foundKeywords.size();
-        if (foundKeywords.contains("Fumeur") && foundKeywords.contains("Fumeuse"))
-            keywordsNumber--;
-        return determineDiagnosticLevel(keywordsNumber, patient);
+        return determineDiagnosticLevel(foundKeywords.size(), patient);
     }
 
     private DiagnosticLevel determineDiagnosticLevel(int keywordCount, Patient patient) {
         int age = patient.getAge();
         boolean isMale = patient.getGenre() == 'M';
+        logger.debug("Patient is male :" + isMale);
 
-        if (keywordCount == 0) {
-            return DiagnosticLevel.NONE;
-        }
-
-        if (keywordCount >= 2 && keywordCount <= 5 && age > 30) {
-            return DiagnosticLevel.BORDERLINE;
+        if ((isMale && age < 30 && keywordCount >= 5) ||
+                (!isMale && age < 30 && keywordCount >= 7) ||
+                (age > 30 && keywordCount >= 8)) {
+            return DiagnosticLevel.EARLY;
         }
 
         if ((isMale && age < 30 && keywordCount >= 3) ||
@@ -76,10 +73,12 @@ public class DiagnosticService {
             return DiagnosticLevel.DANGER;
         }
 
-        if ((isMale && age < 30 && keywordCount >= 5) ||
-                (!isMale && age < 30 && keywordCount >= 7) ||
-                (age > 30 && keywordCount >= 8)) {
-            return DiagnosticLevel.EARLY;
+        if (keywordCount >= 2 && keywordCount <= 5 && age > 30) {
+            return DiagnosticLevel.BORDERLINE;
+        }
+
+        if (keywordCount == 0) {
+            return DiagnosticLevel.NONE;
         }
 
         return DiagnosticLevel.NONE;

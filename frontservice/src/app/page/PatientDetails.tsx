@@ -9,6 +9,8 @@ import {
   putNoteRequest,
 } from "../request/noteRequests";
 import PatientForm from "./PatientForm";
+import { getDiagnosticRequest } from "../request/diagnosticRequest";
+import PatientWarning from "../component/PatientWarning";
 
 export default function PatientDetails(): JSX.Element {
   const { patientId } = useParams<{ patientId: string }>() as unknown as {
@@ -23,6 +25,9 @@ export default function PatientDetails(): JSX.Element {
 
   useEffect(() => {
     updateNotes();
+    getDiagnosticRequest(patientId).then((res) => {
+      console.log(res);
+    });
   }, [patientId]);
 
   const updateNotes = () => {
@@ -63,13 +68,12 @@ export default function PatientDetails(): JSX.Element {
   };
 
   const addNote = (text: string) => {
-    const note : Note = {patientId : patientId as unknown as string,
-      text}
+    const note: Note = { patientId: patientId as unknown as string, text };
     postNoteRequest(note)
       .then(() => {
         updateNotes();
-        setIsEditingNode(undefined)
-        setEditedText('')
+        setIsEditingNode(undefined);
+        setEditedText("");
       })
       .catch((err) => {
         console.log(err);
@@ -83,50 +87,54 @@ export default function PatientDetails(): JSX.Element {
         <table className="patientdetails_table">
           <thead>
             <tr>
-              <th className="patientdetails_title">Notes</th>
+              <th className="patientdetails_title">
+                Notes
+                <PatientWarning patientId={patientId} />
+              </th>
               <th>
                 <button
                   className="patientdetails_button"
                   disabled={isEditingNode !== undefined}
-                  onClick={()=>setIsEditingNode(-1)}
+                  onClick={() => setIsEditingNode(-1)}
                 >
                   Ajouter
                 </button>
               </th>
             </tr>
           </thead>
-          <tbody>{(isEditingNode === -1) ? (
+          <tbody>
+            {isEditingNode === -1 ? (
               <tr key={-1}>
                 <td>
-                    <textarea
-                      style={{ width: "100%" }}
-                      defaultValue={editedText}
-                      onChange={(e) => handleChange(e)}
-                    ></textarea>
+                  <textarea
+                    style={{ width: "100%" }}
+                    defaultValue={editedText}
+                    onChange={(e) => handleChange(e)}
+                  ></textarea>
                 </td>
                 <td>
-                    <div>
-                      <button
-                        className="patientdetails_button"
-                        onClick={() => addNote(editedText)}
-                      >
-                        Ajouter
-                      </button>
-                      <button
-                        className="patientdetails_button"
-                        onClick={() => {
-                          setIsEditingNode(undefined);
-                          setEditedText("");
-                        }}
-                      >
-                        Annuler
-                      </button>
-                    </div>
+                  <div>
+                    <button
+                      className="patientdetails_button"
+                      onClick={() => addNote(editedText)}
+                    >
+                      Ajouter
+                    </button>
+                    <button
+                      className="patientdetails_button"
+                      onClick={() => {
+                        setIsEditingNode(undefined);
+                        setEditedText("");
+                      }}
+                    >
+                      Annuler
+                    </button>
+                  </div>
                 </td>
               </tr>
-                  ) : (
-                    <></>
-                  )}
+            ) : (
+              <></>
+            )}
             {noteData.reverse().map((note, index) => (
               <tr key={note.id}>
                 <td>

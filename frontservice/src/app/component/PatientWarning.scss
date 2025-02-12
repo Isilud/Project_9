@@ -1,0 +1,14 @@
+.level {
+  &-none {
+    color: #4caf50;
+  }
+  &-borderline {
+    color: #ffc107;
+  }
+  &-danger {
+    color: #ff9800;
+  }
+  &-early {
+    color: #f44336;
+  }
+}

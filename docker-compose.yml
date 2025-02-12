@@ -34,7 +34,7 @@ services:
     environment:
       - PATIENT_SERVICE_URL=http://patientservice:8081
       - NOTE_SERVICE_URL=http://noteservice:8082
-      - DIAGNOSTIC_SERVICE_URL=http://noteservice:8083
+      - DIAGNOSTIC_SERVICE_URL=http://diagnosticservice:8083
     depends_on:
       - patientservice
       - noteservice
@@ -64,6 +64,7 @@ services:
         context: ./diagnosticservice
       environment:
         - SPRING_PROFILES_ACTIVE=dev
+        - GATESERVICE_URL=http://gateservice:8080
       depends_on:
         - patientservice
         - noteservice
