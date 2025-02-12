@@ -14,7 +14,7 @@ export default function PatientWarning({
     getDiagnosticRequest(patientId).then((level) => {
       setDiagnostic(level);
     });
-  }, []);
+  }, [patientId]);
 
   switch (diagnostic) {
     case "NONE":

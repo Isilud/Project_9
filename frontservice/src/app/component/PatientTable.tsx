@@ -1,4 +1,4 @@
-import { JSX, useEffect } from "react";
+import { JSX, useCallback, useEffect } from "react";
 import { patientList } from "../store/patientsAtom";
 import { useAtom } from "jotai";
 import "./PatientTable.scss";
@@ -12,17 +12,17 @@ export default function PatientTable(): JSX.Element {
   const [patients, setPatients] = useAtom(patientList);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    updatePatientList();
-  }, []);
-
-  const updatePatientList = async () => {
+  const updatePatientList = useCallback(async () => {
     await getAllPatientRequest()
       .then((res) => {
         setPatients(res);
       })
       .catch((err) => console.log(err));
-  };
+  }, [setPatients]);
+
+  useEffect(() => {
+    updatePatientList();
+  }, [updatePatientList]);
 
   const handleDelete = async (patientId: number) => {
     await deletePatientRequest(patientId).catch((err) => console.log(err));

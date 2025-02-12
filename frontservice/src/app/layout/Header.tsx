@@ -1,5 +1,5 @@
 import { JSX } from "react";
-import "./header.scss";
+import "./Header.scss";
 import { userLoginState } from "../store/loginAtom";
 import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";

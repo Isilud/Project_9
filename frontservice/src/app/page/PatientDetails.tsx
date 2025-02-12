@@ -1,4 +1,4 @@
-import { JSX, useEffect, useState } from "react";
+import { JSX, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./PatientDetails.scss";
 import Note from "../model/Note";
@@ -23,14 +23,7 @@ export default function PatientDetails(): JSX.Element {
 
   const [editedText, setEditedText] = useState<string>("");
 
-  useEffect(() => {
-    updateNotes();
-    getDiagnosticRequest(patientId).then((res) => {
-      console.log(res);
-    });
-  }, [patientId]);
-
-  const updateNotes = () => {
+  const updateNotes = useCallback(() => {
     if (patientId) {
       getAllNotesRequestForPatient(patientId)
         .then((res) => {
@@ -38,7 +31,14 @@ export default function PatientDetails(): JSX.Element {
         })
         .catch((err) => console.log(err));
     }
-  };
+  }, [patientId]);
+
+  useEffect(() => {
+    updateNotes();
+    getDiagnosticRequest(patientId).then((res) => {
+      console.log(res);
+    });
+  }, [patientId, updateNotes]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;

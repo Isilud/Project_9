@@ -69,6 +69,14 @@ services:
         - patientservice
         - noteservice
 
+  frontservice:
+    build:
+      context: ./frontservice
+    ports:
+      - "4173:4173"
+    depends_on:
+      - gateservice
+
 volumes:
   my-db:
   mongo-data:

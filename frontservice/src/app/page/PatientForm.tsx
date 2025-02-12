@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { JSX, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Patient from "../model/Patient";
@@ -26,10 +27,6 @@ export default function PatientForm({
 
   const [isDirty, setIsDirty] = useState<boolean>(false);
 
-  useEffect(() => {
-    updatePatient();
-  }, [patientId]);
-
   const updatePatient = () => {
     if (patientId)
       getPatientRequest(patientId as unknown as number)
@@ -38,6 +35,10 @@ export default function PatientForm({
         })
         .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    updatePatient();
+  }, [patientId, updatePatient]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>

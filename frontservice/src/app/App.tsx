@@ -1,5 +1,3 @@
-"use client";
-
 import Header from "./layout/Header";
 import Main from "./layout/Main";
 import { BrowserRouter } from "react-router-dom";
