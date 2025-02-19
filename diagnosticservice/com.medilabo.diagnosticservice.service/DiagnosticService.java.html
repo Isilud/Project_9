@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>DiagnosticService.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">MedilaboProject</a> &gt; <a href="../index.html" class="el_bundle">diagnosticservice</a> &gt; <a href="index.source.html" class="el_package">com.medilabo.diagnosticservice.service</a> &gt; <span class="el_source">DiagnosticService.java</span></div><h1>DiagnosticService.java</h1><pre class="source lang-java linenums">package com.medilabo.diagnosticservice.service;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import com.medilabo.diagnosticservice.client.GateServiceClient;
+import com.medilabo.diagnosticservice.model.DiagnosticLevel;
+import com.medilabo.diagnosticservice.model.Note;
+import com.medilabo.diagnosticservice.model.Patient;
+
+@Service
+public class DiagnosticService {
+<span class="fc" id="L19">    private final Logger logger = LoggerFactory.getLogger(DiagnosticService.class);</span>
+
+    private final GateServiceClient gateServiceClient;
+
+<span class="fc" id="L23">    public DiagnosticService(GateServiceClient gateServiceClient) {</span>
+<span class="fc" id="L24">        this.gateServiceClient = gateServiceClient;</span>
+<span class="fc" id="L25">    }</span>
+
+<span class="fc" id="L27">    static private List&lt;String&gt; keywords = Arrays.asList(</span>
+            &quot;Hémoglobine A1C&quot;,
+            &quot;Microalbumine&quot;,
+            &quot;Taille&quot;,
+            &quot;Poids&quot;,
+            &quot;Fumeur&quot;,
+            &quot;Fumeuse&quot;,
+            &quot;Anormal&quot;,
+            &quot;Cholestérol&quot;,
+            &quot;Vertiges&quot;,
+            &quot;Rechute&quot;,
+            &quot;Réaction&quot;,
+            &quot;Anticorps&quot;);
+
+    public DiagnosticLevel getLevel(Integer patientId) {
+<span class="fc" id="L42">        List&lt;Note&gt; notes = gateServiceClient.getDiagnostics(patientId);</span>
+<span class="fc" id="L43">        Patient patient = gateServiceClient.getPatient(patientId);</span>
+<span class="fc" id="L44">        logger.debug(&quot;Found &quot; + notes.size() + &quot; notes for patient &quot; + patientId);</span>
+<span class="fc" id="L45">        Set&lt;String&gt; foundKeywords = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        for (String keyword : keywords) {</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">            for (Note note : notes) {</span>
+<span class="fc" id="L48">                String text = note.getText().toLowerCase();</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">                if (text.contains(keyword.toLowerCase())) {</span>
+<span class="fc" id="L50">                    logger.debug(&quot;Found &quot; + keyword);</span>
+<span class="fc" id="L51">                    foundKeywords.add(keyword);</span>
+<span class="fc" id="L52">                    break;</span>
+                }
+<span class="fc" id="L54">            }</span>
+<span class="fc" id="L55">        }</span>
+<span class="fc" id="L56">        return determineDiagnosticLevel(foundKeywords.size(), patient);</span>
+    }
+
+    private DiagnosticLevel determineDiagnosticLevel(int keywordCount, Patient patient) {
+<span class="fc" id="L60">        int age = patient.getAge();</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        boolean isMale = patient.getGenre() == 'M';</span>
+<span class="fc" id="L62">        logger.debug(&quot;Patient is male :&quot; + isMale);</span>
+
+<span class="pc bpc" id="L64" title="3 of 16 branches missed.">        if ((isMale &amp;&amp; age &lt; 30 &amp;&amp; keywordCount &gt;= 5) ||</span>
+                (!isMale &amp;&amp; age &lt; 30 &amp;&amp; keywordCount &gt;= 7) ||
+                (age &gt; 30 &amp;&amp; keywordCount &gt;= 8)) {
+<span class="fc" id="L67">            return DiagnosticLevel.EARLY;</span>
+        }
+
+<span class="pc bpc" id="L70" title="9 of 18 branches missed.">        if ((isMale &amp;&amp; age &lt; 30 &amp;&amp; keywordCount &gt;= 3) ||</span>
+                (!isMale &amp;&amp; age &lt; 30 &amp;&amp; keywordCount &gt;= 4) ||
+                (age &gt; 30 &amp;&amp; keywordCount &gt;= 6 &amp;&amp; keywordCount &lt;= 7)) {
+<span class="fc" id="L73">            return DiagnosticLevel.DANGER;</span>
+        }
+
+<span class="pc bpc" id="L76" title="2 of 6 branches missed.">        if (keywordCount &gt;= 2 &amp;&amp; keywordCount &lt;= 5 &amp;&amp; age &gt; 30) {</span>
+<span class="fc" id="L77">            return DiagnosticLevel.BORDERLINE;</span>
+        }
+
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        if (keywordCount == 0) {</span>
+<span class="fc" id="L81">            return DiagnosticLevel.NONE;</span>
+        }
+
+<span class="nc" id="L84">        return DiagnosticLevel.NONE;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
