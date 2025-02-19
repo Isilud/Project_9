@@ -24,10 +24,10 @@ public class DiagnosticController {
 
     @GetMapping(&quot;/{patientId}&quot;)
     public DiagnosticLevel getDiagnosticForPatientId(@PathVariable Integer patientId) {
-<span class="nc" id="L27">        logger.info(&quot;Fetch request for patient with id : &quot;, patientId);</span>
-<span class="nc" id="L28">        DiagnosticLevel level = diagnosticService.getLevel(patientId);</span>
-<span class="nc" id="L29">        logger.info(&quot;Danger level &quot;, level.toString(), &quot; for patient with id &quot;, patientId);</span>
-<span class="nc" id="L30">        return level;</span>
+<span class="fc" id="L27">        logger.info(&quot;Fetch request for patient with id : &quot;, patientId);</span>
+<span class="fc" id="L28">        DiagnosticLevel level = diagnosticService.getLevel(patientId);</span>
+<span class="fc" id="L29">        logger.info(&quot;Danger level &quot;, level.toString(), &quot; for patient with id &quot;, patientId);</span>
+<span class="fc" id="L30">        return level;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

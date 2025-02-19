@@ -9,5 +9,5 @@ MedilaboProject/noteservice,com.medilabo.noteservice.controller,NoteController,0
 MedilaboProject/noteservice,com.medilabo.noteservice.service,NoteService,0,61,0,0,0,16,0,5,0,5
 MedilaboProject/diagnosticservice,com.medilabo.diagnosticservice.model,DiagnosticLevel,0,27,0,0,0,2,0,1,0,1
 MedilaboProject/diagnosticservice,com.medilabo.diagnosticservice.service,DiagnosticService,11,204,15,35,1,30,12,17,0,4
-MedilaboProject/diagnosticservice,com.medilabo.diagnosticservice.controller,DiagnosticController,31,10,0,0,4,4,1,1,1,1
+MedilaboProject/diagnosticservice,com.medilabo.diagnosticservice.controller,DiagnosticController,0,41,0,0,0,8,0,2,0,2
 MedilaboProject/diagnosticservice,com.medilabo.diagnosticservice,DiagnosticserviceApplication,5,3,0,0,2,1,1,1,1,1
