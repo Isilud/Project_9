@@ -17,6 +17,7 @@
     <modules>
         <module>patientservice</module>
         <module>noteservice</module>
+        <module>diagnosticservice</module>
     </modules>
 
     <properties>
