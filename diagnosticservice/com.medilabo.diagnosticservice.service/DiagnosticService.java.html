@@ -14,17 +14,24 @@ import com.medilabo.diagnosticservice.model.DiagnosticLevel;
 import com.medilabo.diagnosticservice.model.Note;
 import com.medilabo.diagnosticservice.model.Patient;
 
+/**
+ * Service qui gère la logique de diagnostic des patients en fonction de leurs notes médicales.
+ * Ce service interagit avec un client pour obtenir les données de diagnostic et de patient,
+ * puis analyse les informations pour déterminer un niveau de diagnostic basé sur des mots-clés présents
+ * dans les notes médicales du patient.
+ */
 @Service
 public class DiagnosticService {
-<span class="fc" id="L19">    private final Logger logger = LoggerFactory.getLogger(DiagnosticService.class);</span>
+<span class="fc" id="L25">    private final Logger logger = LoggerFactory.getLogger(DiagnosticService.class);</span>
 
     private final GateServiceClient gateServiceClient;
 
-<span class="fc" id="L23">    public DiagnosticService(GateServiceClient gateServiceClient) {</span>
-<span class="fc" id="L24">        this.gateServiceClient = gateServiceClient;</span>
-<span class="fc" id="L25">    }</span>
+<span class="fc" id="L29">    public DiagnosticService(GateServiceClient gateServiceClient) {</span>
+<span class="fc" id="L30">        this.gateServiceClient = gateServiceClient;</span>
+<span class="fc" id="L31">    }</span>
 
-<span class="fc" id="L27">    static private List&lt;String&gt; keywords = Arrays.asList(</span>
+    // Liste des mots-clés utilisés pour évaluer le diagnostic
+<span class="fc" id="L34">    static private List&lt;String&gt; keywords = Arrays.asList(</span>
             &quot;Hémoglobine A1C&quot;,
             &quot;Microalbumine&quot;,
             &quot;Taille&quot;,
@@ -38,50 +45,69 @@ public class DiagnosticService {
             &quot;Réaction&quot;,
             &quot;Anticorps&quot;);
 
+    /**
+     * Méthode pour obtenir le niveau de diagnostic d'un patient en fonction des notes médicales
+     * et des informations personnelles du patient (âge et sexe).
+     * 
+     * @param patientId L'identifiant du patient dont le niveau de diagnostic est à déterminer.
+     * @return Le niveau de diagnostic du patient basé sur l'analyse des mots-clés présents dans les notes médicales
+     *         et des critères du patient (âge et sexe).
+     */
     public DiagnosticLevel getLevel(Integer patientId) {
-<span class="fc" id="L42">        List&lt;Note&gt; notes = gateServiceClient.getDiagnostics(patientId);</span>
-<span class="fc" id="L43">        Patient patient = gateServiceClient.getPatient(patientId);</span>
-<span class="fc" id="L44">        logger.debug(&quot;Found &quot; + notes.size() + &quot; notes for patient &quot; + patientId);</span>
-<span class="fc" id="L45">        Set&lt;String&gt; foundKeywords = new HashSet&lt;&gt;();</span>
-<span class="fc bfc" id="L46" title="All 2 branches covered.">        for (String keyword : keywords) {</span>
-<span class="fc bfc" id="L47" title="All 2 branches covered.">            for (Note note : notes) {</span>
-<span class="fc" id="L48">                String text = note.getText().toLowerCase();</span>
-<span class="fc bfc" id="L49" title="All 2 branches covered.">                if (text.contains(keyword.toLowerCase())) {</span>
-<span class="fc" id="L50">                    logger.debug(&quot;Found &quot; + keyword);</span>
-<span class="fc" id="L51">                    foundKeywords.add(keyword);</span>
-<span class="fc" id="L52">                    break;</span>
+<span class="fc" id="L57">        List&lt;Note&gt; notes = gateServiceClient.getDiagnostics(patientId);</span>
+<span class="fc" id="L58">        Patient patient = gateServiceClient.getPatient(patientId);</span>
+<span class="fc" id="L59">        logger.debug(&quot;Found &quot; + notes.size() + &quot; notes for patient &quot; + patientId);</span>
+
+<span class="fc" id="L61">        Set&lt;String&gt; foundKeywords = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        for (String keyword : keywords) {</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">            for (Note note : notes) {</span>
+<span class="fc" id="L64">                String text = note.getText().toLowerCase();</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">                if (text.contains(keyword.toLowerCase())) {</span>
+<span class="fc" id="L66">                    logger.debug(&quot;Found &quot; + keyword);</span>
+<span class="fc" id="L67">                    foundKeywords.add(keyword);</span>
+<span class="fc" id="L68">                    break;</span>
                 }
-<span class="fc" id="L54">            }</span>
-<span class="fc" id="L55">        }</span>
-<span class="fc" id="L56">        return determineDiagnosticLevel(foundKeywords.size(), patient);</span>
+<span class="fc" id="L70">            }</span>
+<span class="fc" id="L71">        }</span>
+
+        // Détermination du niveau de diagnostic basé sur les mots-clés trouvés
+<span class="fc" id="L74">        return determineDiagnosticLevel(foundKeywords.size(), patient);</span>
     }
 
+    /**
+     * Méthode qui détermine le niveau de diagnostic basé sur le nombre de mots-clés trouvés
+     * et les informations du patient (âge et sexe).
+     * 
+     * @param keywordCount Le nombre de mots-clés trouvés dans les notes médicales du patient.
+     * @param patient Le patient dont les informations sont utilisées pour évaluer le niveau de diagnostic.
+     * @return Le niveau de diagnostic du patient en fonction de l'analyse des mots-clés et des critères personnels.
+     */
     private DiagnosticLevel determineDiagnosticLevel(int keywordCount, Patient patient) {
-<span class="fc" id="L60">        int age = patient.getAge();</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">        boolean isMale = patient.getGenre() == 'M';</span>
-<span class="fc" id="L62">        logger.debug(&quot;Patient is male :&quot; + isMale);</span>
+<span class="fc" id="L86">        int age = patient.getAge();</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        boolean isMale = patient.getGenre() == 'M';</span>
+<span class="fc" id="L88">        logger.debug(&quot;Patient is male :&quot; + isMale);</span>
 
-<span class="pc bpc" id="L64" title="3 of 16 branches missed.">        if ((isMale &amp;&amp; age &lt; 30 &amp;&amp; keywordCount &gt;= 5) ||</span>
+<span class="pc bpc" id="L90" title="3 of 16 branches missed.">        if ((isMale &amp;&amp; age &lt; 30 &amp;&amp; keywordCount &gt;= 5) ||</span>
                 (!isMale &amp;&amp; age &lt; 30 &amp;&amp; keywordCount &gt;= 7) ||
                 (age &gt; 30 &amp;&amp; keywordCount &gt;= 8)) {
-<span class="fc" id="L67">            return DiagnosticLevel.EARLY;</span>
+<span class="fc" id="L93">            return DiagnosticLevel.EARLY;</span>
         }
 
-<span class="pc bpc" id="L70" title="9 of 18 branches missed.">        if ((isMale &amp;&amp; age &lt; 30 &amp;&amp; keywordCount &gt;= 3) ||</span>
+<span class="pc bpc" id="L96" title="9 of 18 branches missed.">        if ((isMale &amp;&amp; age &lt; 30 &amp;&amp; keywordCount &gt;= 3) ||</span>
                 (!isMale &amp;&amp; age &lt; 30 &amp;&amp; keywordCount &gt;= 4) ||
                 (age &gt; 30 &amp;&amp; keywordCount &gt;= 6 &amp;&amp; keywordCount &lt;= 7)) {
-<span class="fc" id="L73">            return DiagnosticLevel.DANGER;</span>
+<span class="fc" id="L99">            return DiagnosticLevel.DANGER;</span>
         }
 
-<span class="pc bpc" id="L76" title="2 of 6 branches missed.">        if (keywordCount &gt;= 2 &amp;&amp; keywordCount &lt;= 5 &amp;&amp; age &gt; 30) {</span>
-<span class="fc" id="L77">            return DiagnosticLevel.BORDERLINE;</span>
+<span class="pc bpc" id="L102" title="2 of 6 branches missed.">        if (keywordCount &gt;= 2 &amp;&amp; keywordCount &lt;= 5 &amp;&amp; age &gt; 30) {</span>
+<span class="fc" id="L103">            return DiagnosticLevel.BORDERLINE;</span>
         }
 
-<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        if (keywordCount == 0) {</span>
-<span class="fc" id="L81">            return DiagnosticLevel.NONE;</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">        if (keywordCount == 0) {</span>
+<span class="fc" id="L107">            return DiagnosticLevel.NONE;</span>
         }
 
-<span class="nc" id="L84">        return DiagnosticLevel.NONE;</span>
+<span class="nc" id="L110">        return DiagnosticLevel.NONE;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

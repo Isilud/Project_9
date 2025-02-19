@@ -11,47 +11,81 @@ import com.medilabo.patientservice.repository.PatientRepository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service pour la gestion des patients.
+ * Permet d'effectuer des opérations telles que l'ajout, la récupération, la
+ * mise à jour et la suppression de patients.
+ */
 @Service
 public class PatientService {
 
-<span class="fc" id="L17">    private final Logger logger = LoggerFactory.getLogger(PatientService.class);</span>
-
+<span class="fc" id="L22">    private final Logger logger = LoggerFactory.getLogger(PatientService.class);</span>
     private final PatientRepository patientRepository;
 
-<span class="fc" id="L21">    public PatientService(PatientRepository patientRepository) {</span>
-<span class="fc" id="L22">        this.patientRepository = patientRepository;</span>
-<span class="fc" id="L23">    }</span>
+<span class="fc" id="L25">    public PatientService(PatientRepository patientRepository) {</span>
+<span class="fc" id="L26">        this.patientRepository = patientRepository;</span>
+<span class="fc" id="L27">    }</span>
 
+    /**
+     * Ajoute un nouveau patient.
+     *
+     * @param patient Objet contenant les informations du patient à ajouter.
+     * @return Le patient sauvegardé.
+     */
     public Patient addPatient(Patient patient) {
-<span class="fc" id="L26">        Patient savedPatient = patientRepository.save(patient);</span>
-<span class="fc" id="L27">        logger.debug(&quot;Patient saved : &quot;, patient);</span>
-<span class="fc" id="L28">        return savedPatient;</span>
+<span class="fc" id="L36">        Patient savedPatient = patientRepository.save(patient);</span>
+<span class="fc" id="L37">        logger.debug(&quot;Patient saved: {}&quot;, patient);</span>
+<span class="fc" id="L38">        return savedPatient;</span>
     }
 
+    /**
+     * Récupère tous les patients.
+     *
+     * @return Liste de tous les patients présents dans la base de données.
+     */
     public List&lt;Patient&gt; getAllPatients() {
-<span class="fc" id="L32">        List&lt;Patient&gt; listPatient = patientRepository.findAll();</span>
-<span class="fc" id="L33">        logger.debug(&quot;Found &quot;, listPatient.size(), &quot; patients.&quot;);</span>
-<span class="fc" id="L34">        return listPatient;</span>
+<span class="fc" id="L47">        List&lt;Patient&gt; listPatient = patientRepository.findAll();</span>
+<span class="fc" id="L48">        logger.debug(&quot;Found {} patients.&quot;, listPatient.size());</span>
+<span class="fc" id="L49">        return listPatient;</span>
     }
 
+    /**
+     * Récupère un patient en fonction de son identifiant.
+     *
+     * @param id Identifiant du patient à récupérer.
+     * @return Le patient correspondant à l'identifiant.
+     * @throws PatientNotFoundException Si le patient n'est pas trouvé dans la base
+     *                                  de données.
+     */
     public Patient getPatientById(Integer id) throws PatientNotFoundException {
-<span class="fc" id="L38">        Optional&lt;Patient&gt; foundPatient = patientRepository.findById(id);</span>
-<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (!foundPatient.isPresent()) {</span>
-<span class="fc" id="L40">            throw new PatientNotFoundException(id);</span>
+<span class="fc" id="L61">        Optional&lt;Patient&gt; foundPatient = patientRepository.findById(id);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        if (!foundPatient.isPresent()) {</span>
+<span class="fc" id="L63">            throw new PatientNotFoundException(id);</span>
         }
-<span class="fc" id="L42">        logger.debug(&quot;Patient found : &quot;, foundPatient.get());</span>
-<span class="fc" id="L43">        return foundPatient.get();</span>
+<span class="fc" id="L65">        logger.debug(&quot;Patient found: {}&quot;, foundPatient.get());</span>
+<span class="fc" id="L66">        return foundPatient.get();</span>
     }
 
+    /**
+     * Met à jour les informations d'un patient.
+     *
+     * @param patient Patient contenant les nouvelles informations à mettre à jour.
+     * @return Le patient mis à jour.
+     */
     public Patient updatePatient(Patient patient) {
-<span class="fc" id="L47">        Patient updatedPatient = patientRepository.save(patient);</span>
-<span class="fc" id="L48">        logger.debug(&quot;Patient updated : &quot;, updatedPatient);</span>
-<span class="fc" id="L49">        return updatedPatient;</span>
+<span class="fc" id="L76">        Patient updatedPatient = patientRepository.save(patient);</span>
+<span class="fc" id="L77">        logger.debug(&quot;Patient updated: {}&quot;, updatedPatient);</span>
+<span class="fc" id="L78">        return updatedPatient;</span>
     }
 
+    /**
+     * Supprime un patient en fonction de son identifiant.
+     *
+     * @param id Identifiant du patient à supprimer.
+     */
     public void deletePatient(Integer id) {
-<span class="fc" id="L53">        patientRepository.deleteById(id);</span>
-<span class="fc" id="L54">        logger.debug(&quot;Patient deleted with : &quot;, id);</span>
-<span class="fc" id="L55">    }</span>
+<span class="fc" id="L87">        patientRepository.deleteById(id);</span>
+<span class="fc" id="L88">        logger.debug(&quot;Patient deleted with id: {}&quot;, id);</span>
+<span class="fc" id="L89">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

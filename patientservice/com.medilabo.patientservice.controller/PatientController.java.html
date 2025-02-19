@@ -2,7 +2,6 @@
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.medilabo.patientservice.model.Patient;
@@ -12,50 +11,87 @@ import jakarta.validation.Valid;
 
 import java.util.List;
 
+/**
+ * Contrôleur pour la gestion des patients.
+ * Fournit des endpoints pour ajouter, récupérer, mettre à jour et supprimer des
+ * patients.
+ */
 @RestController
 @RequestMapping(&quot;/patients&quot;)
-<span class="fc" id="L17">public class PatientController {</span>
+public class PatientController {
 
-<span class="fc" id="L19">    private final Logger logger = LoggerFactory.getLogger(PatientController.class);</span>
+<span class="fc" id="L23">    private final Logger logger = LoggerFactory.getLogger(PatientController.class);</span>
 
-    @Autowired
-    private PatientService patientService;
+    private final PatientService patientService;
 
+<span class="fc" id="L27">    public PatientController(PatientService patientService) {</span>
+<span class="fc" id="L28">        this.patientService = patientService;</span>
+<span class="fc" id="L29">    }</span>
+
+    /**
+     * Endpoint pour ajouter un nouveau patient.
+     * 
+     * @param patient Patient à ajouter.
+     * @return Le patient ajouté avec son identifiant généré.
+     */
     @PostMapping
     public Patient addPatient(@Valid @RequestBody Patient patient) {
-<span class="fc" id="L26">        logger.info(&quot;Save request for new patient&quot;);</span>
-<span class="fc" id="L27">        Patient registeredPatient = patientService.addPatient(patient);</span>
-<span class="fc" id="L28">        logger.info(&quot;Saved patient with id : &quot;, patient.getId());</span>
-<span class="fc" id="L29">        return registeredPatient;</span>
+<span class="fc" id="L39">        logger.info(&quot;Save request for new patient&quot;);</span>
+<span class="fc" id="L40">        Patient registeredPatient = patientService.addPatient(patient);</span>
+<span class="fc" id="L41">        logger.info(&quot;Saved patient with id: {}&quot;, patient.getId());</span>
+<span class="fc" id="L42">        return registeredPatient;</span>
     }
 
+    /**
+     * Endpoint pour récupérer tous les patients.
+     *
+     * @return Liste de tous les patients enregistrés.
+     */
     @GetMapping
     public List&lt;Patient&gt; getAllPatients() {
-<span class="fc" id="L34">        logger.info(&quot;Fetch request for all patients&quot;);</span>
-<span class="fc" id="L35">        return patientService.getAllPatients();</span>
+<span class="fc" id="L52">        logger.info(&quot;Fetch request for all patients&quot;);</span>
+<span class="fc" id="L53">        return patientService.getAllPatients();</span>
     }
 
+    /**
+     * Endpoint pour récupérer un patient par son identifiant.
+     * 
+     * @param id Identifiant du patient à récupérer.
+     * @return Le patient correspondant à l'identifiant donné.
+     */
     @GetMapping(&quot;/{id}&quot;)
     public Patient getPatientById(@PathVariable Integer id) {
-<span class="fc" id="L40">        logger.info(&quot;Fetch request for patient with id : &quot;, id);</span>
-<span class="fc" id="L41">        Patient foundPatient = patientService.getPatientById(id);</span>
-<span class="fc" id="L42">        logger.info(&quot;Patient found : &quot;, id);</span>
-<span class="fc" id="L43">        return foundPatient;</span>
+<span class="fc" id="L64">        logger.info(&quot;Fetch request for patient with id: {}&quot;, id);</span>
+<span class="fc" id="L65">        Patient foundPatient = patientService.getPatientById(id);</span>
+<span class="fc" id="L66">        logger.info(&quot;Patient found with id: {}&quot;, id);</span>
+<span class="fc" id="L67">        return foundPatient;</span>
     }
 
+    /**
+     * Endpoint pour mettre à jour un patient.
+     * 
+     * @param id      Identifiant du patient à mettre à jour.
+     * @param patient Objet patient contenant les nouvelles informations.
+     * @return Le patient mis à jour avec ses nouvelles informations.
+     */
     @PutMapping(&quot;/{id}&quot;)
     public Patient updatePatient(@PathVariable Integer id, @Valid @RequestBody Patient patient) {
-<span class="fc" id="L48">        logger.info(&quot;Update request for patient with id : &quot;, id);</span>
-<span class="fc" id="L49">        patient.setId(id);</span>
-<span class="fc" id="L50">        Patient updatedPatient = patientService.updatePatient(patient);</span>
-<span class="fc" id="L51">        logger.info(&quot;Patient updated with id : &quot;, id);</span>
-<span class="fc" id="L52">        return updatedPatient;</span>
+<span class="fc" id="L79">        logger.info(&quot;Update request for patient with id: {}&quot;, id);</span>
+<span class="fc" id="L80">        patient.setId(id); // Définit l'ID du patient avant la mise à jour</span>
+<span class="fc" id="L81">        Patient updatedPatient = patientService.updatePatient(patient);</span>
+<span class="fc" id="L82">        logger.info(&quot;Patient updated with id: {}&quot;, id);</span>
+<span class="fc" id="L83">        return updatedPatient;</span>
     }
 
+    /**
+     * Endpoint pour supprimer un patient par son identifiant.
+     * 
+     * @param id Identifiant du patient à supprimer.
+     */
     @DeleteMapping(&quot;/{id}&quot;)
     public void deletePatient(@PathVariable Integer id) {
-<span class="fc" id="L57">        logger.info(&quot;Delete request for patient with id : &quot;, id);</span>
-<span class="fc" id="L58">        patientService.deletePatient(id);</span>
-<span class="fc" id="L59">    }</span>
+<span class="fc" id="L93">        logger.info(&quot;Delete request for patient with id: {}&quot;, id);</span>
+<span class="fc" id="L94">        patientService.deletePatient(id);</span>
+<span class="fc" id="L95">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

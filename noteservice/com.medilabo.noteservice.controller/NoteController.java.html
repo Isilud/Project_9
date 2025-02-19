@@ -4,58 +4,80 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.medilabo.noteservice.model.Note;
 import com.medilabo.noteservice.service.NoteService;
 
+/**
+ * Contrôleur REST pour la gestion des notes médicales des patients.
+ * Fournit des points d'entrée pour récupérer, ajouter, mettre à jour et
+ * supprimer des notes.
+ */
 @RestController
 @RequestMapping(&quot;/notes&quot;)
 public class NoteController {
 
-<span class="fc" id="L23">    Logger logger = LoggerFactory.getLogger(NoteController.class);</span>
-
+<span class="fc" id="L21">    private final Logger logger = LoggerFactory.getLogger(NoteController.class);</span>
     private final NoteService noteService;
 
-<span class="fc" id="L27">    public NoteController(NoteService noteService) {</span>
-<span class="fc" id="L28">        this.noteService = noteService;</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L24">    public NoteController(NoteService noteService) {</span>
+<span class="fc" id="L25">        this.noteService = noteService;</span>
+<span class="fc" id="L26">    }</span>
 
+    /**
+     * Récupère toutes les notes associées à un patient.
+     *
+     * @param patientId Identifiant du patient pour lequel récupérer les notes.
+     * @return Liste des notes du patient.
+     */
     @GetMapping(&quot;/{patientId}&quot;)
     public List&lt;Note&gt; getNotesByPatientId(@PathVariable Integer patientId) {
-<span class="fc" id="L33">        logger.info(&quot;Fetch request for patient with id : &quot;, patientId);</span>
-<span class="fc" id="L34">        List&lt;Note&gt; notes = noteService.getNotesByPatientId(patientId);</span>
-<span class="fc" id="L35">        logger.info(&quot;Found &quot;, notes.size(), &quot; notes for patient with id &quot;, patientId);</span>
-<span class="fc" id="L36">        return notes;</span>
+<span class="fc" id="L36">        logger.info(&quot;Fetch request for patient with id: {}&quot;, patientId);</span>
+<span class="fc" id="L37">        List&lt;Note&gt; notes = noteService.getNotesByPatientId(patientId);</span>
+<span class="fc" id="L38">        logger.info(&quot;Found {} notes for patient with id {}&quot;, notes.size(), patientId);</span>
+<span class="fc" id="L39">        return notes;</span>
     }
 
+    /**
+     * Ajoute une nouvelle note pour un patient.
+     *
+     * @param note Objet contenant les informations de la nouvelle note.
+     * @return La note ajoutée avec ses informations sauvegardées.
+     */
     @PostMapping
     public Note addNote(@RequestBody Note note) {
-<span class="fc" id="L41">        logger.info(&quot;Save request for new note&quot;);</span>
-<span class="fc" id="L42">        Note savedNote = noteService.addNote(note);</span>
-<span class="fc" id="L43">        logger.info(&quot;Note saved with id &quot;, savedNote.getId());</span>
-<span class="fc" id="L44">        return savedNote;</span>
+<span class="fc" id="L50">        logger.info(&quot;Save request for new note&quot;);</span>
+<span class="fc" id="L51">        Note savedNote = noteService.addNote(note);</span>
+<span class="fc" id="L52">        logger.info(&quot;Note saved with id: {}&quot;, savedNote.getId());</span>
+<span class="fc" id="L53">        return savedNote;</span>
     }
 
+    /**
+     * Met à jour une note existante.
+     *
+     * @param id   Identifiant de la note à mettre à jour.
+     * @param note Objet contenant les nouvelles informations de la note.
+     * @return La note mise à jour.
+     */
     @PutMapping(&quot;/{id}&quot;)
     public Note updateNote(@PathVariable String id, @RequestBody Note note) {
-<span class="fc" id="L49">        logger.info(&quot;Update request for note with id : &quot;, id);</span>
-<span class="fc" id="L50">        Note updatedNote = noteService.updateNote(note);</span>
-<span class="fc" id="L51">        logger.info(&quot;Updated note with id &quot;, updatedNote.getId());</span>
-<span class="fc" id="L52">        return updatedNote;</span>
+<span class="fc" id="L65">        logger.info(&quot;Update request for note with id: {}&quot;, id);</span>
+<span class="fc" id="L66">        note.setId(id); // Assure que l'ID de la note est correctement mis à jour</span>
+<span class="fc" id="L67">        Note updatedNote = noteService.updateNote(note);</span>
+<span class="fc" id="L68">        logger.info(&quot;Updated note with id: {}&quot;, updatedNote.getId());</span>
+<span class="fc" id="L69">        return updatedNote;</span>
     }
 
+    /**
+     * Supprime une note en fonction de son identifiant.
+     *
+     * @param id Identifiant de la note à supprimer.
+     */
     @DeleteMapping(&quot;/{id}&quot;)
     public void deleteNoteById(@PathVariable String id) {
-<span class="fc" id="L57">        logger.info(&quot;Deletion request for note with id &quot;, id);</span>
-<span class="fc" id="L58">        noteService.deleteNoteById(id);</span>
-<span class="fc" id="L59">    }</span>
+<span class="fc" id="L79">        logger.info(&quot;Deletion request for note with id: {}&quot;, id);</span>
+<span class="fc" id="L80">        noteService.deleteNoteById(id);</span>
+<span class="fc" id="L81">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

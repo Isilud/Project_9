@@ -1,12 +1,12 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-MedilaboProject/patientservice,com.medilabo.patientservice.service,PatientService,0,83,0,2,0,21,0,7,0,6
-MedilaboProject/patientservice,com.medilabo.patientservice.controller,PatientController,0,79,0,0,0,20,0,6,0,6
+MedilaboProject/patientservice,com.medilabo.patientservice.service,PatientService,0,82,0,2,0,21,0,7,0,6
+MedilaboProject/patientservice,com.medilabo.patientservice.controller,PatientController,0,82,0,0,0,22,0,6,0,6
 MedilaboProject/patientservice,com.medilabo.patientservice.controller,ControllerExceptionHandler,0,19,0,0,0,4,0,2,0,2
 MedilaboProject/patientservice,com.medilabo.patientservice.exception,PatientNotFoundException,0,14,0,0,0,4,0,1,0,1
 MedilaboProject/patientservice,com.medilabo.patientservice,PatientserviceApplication,5,3,0,0,2,1,1,1,1,1
 MedilaboProject/noteservice,com.medilabo.noteservice,NoteserviceApplication,5,3,0,0,2,1,1,1,1,1
-MedilaboProject/noteservice,com.medilabo.noteservice.controller,NoteController,0,88,0,0,0,19,0,5,0,5
-MedilaboProject/noteservice,com.medilabo.noteservice.service,NoteService,0,61,0,0,0,16,0,5,0,5
+MedilaboProject/noteservice,com.medilabo.noteservice.controller,NoteController,0,79,0,0,0,20,0,5,0,5
+MedilaboProject/noteservice,com.medilabo.noteservice.service,NoteService,0,62,0,0,0,16,0,5,0,5
 MedilaboProject/diagnosticservice,com.medilabo.diagnosticservice.model,DiagnosticLevel,0,27,0,0,0,2,0,1,0,1
 MedilaboProject/diagnosticservice,com.medilabo.diagnosticservice.service,DiagnosticService,11,204,15,35,1,30,12,17,0,4
 MedilaboProject/diagnosticservice,com.medilabo.diagnosticservice.controller,DiagnosticController,0,41,0,0,0,8,0,2,0,2

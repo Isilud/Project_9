@@ -9,37 +9,64 @@ import org.springframework.stereotype.Service;
 import com.medilabo.noteservice.model.Note;
 import com.medilabo.noteservice.repository.NoteRepository;
 
+/**
+ * Service pour la gestion des notes médicales des patients.
+ * Fournit des opérations pour récupérer, ajouter, mettre à jour et supprimer
+ * des notes.
+ */
 @Service
 public class NoteService {
-<span class="fc" id="L14">    private final Logger logger = LoggerFactory.getLogger(NoteService.class);</span>
-
+<span class="fc" id="L19">    private final Logger logger = LoggerFactory.getLogger(NoteService.class);</span>
     private final NoteRepository noteRepository;
 
-<span class="fc" id="L18">    public NoteService(NoteRepository noteRepository) {</span>
-<span class="fc" id="L19">        this.noteRepository = noteRepository;</span>
-<span class="fc" id="L20">    }</span>
+<span class="fc" id="L22">    public NoteService(NoteRepository noteRepository) {</span>
+<span class="fc" id="L23">        this.noteRepository = noteRepository;</span>
+<span class="fc" id="L24">    }</span>
 
-    public List&lt;Note&gt; getNotesByPatientId(int noteId) {
-<span class="fc" id="L23">        List&lt;Note&gt; notes = noteRepository.findByPatientId(noteId);</span>
-<span class="fc" id="L24">        logger.debug(&quot;Found &quot;, notes.size(), &quot; notes&quot;);</span>
-<span class="fc" id="L25">        return notes;</span>
+    /**
+     * Récupère toutes les notes associées à un patient donné.
+     *
+     * @param patientId Identifiant du patient.
+     * @return Liste des notes du patient.
+     */
+    public List&lt;Note&gt; getNotesByPatientId(int patientId) {
+<span class="fc" id="L33">        List&lt;Note&gt; notes = noteRepository.findByPatientId(patientId);</span>
+<span class="fc" id="L34">        logger.debug(&quot;Found {} notes for patient ID: {}&quot;, notes.size(), patientId);</span>
+<span class="fc" id="L35">        return notes;</span>
     }
 
+    /**
+     * Ajoute une nouvelle note médicale.
+     *
+     * @param note Note à ajouter.
+     * @return La note sauvegardée.
+     */
     public Note addNote(Note note) {
-<span class="fc" id="L29">        Note savedNote = noteRepository.save(note);</span>
-<span class="fc" id="L30">        logger.debug(&quot;Note saved : &quot;, note);</span>
-<span class="fc" id="L31">        return savedNote;</span>
+<span class="fc" id="L45">        Note savedNote = noteRepository.save(note);</span>
+<span class="fc" id="L46">        logger.debug(&quot;Note saved: {}&quot;, savedNote);</span>
+<span class="fc" id="L47">        return savedNote;</span>
     }
 
+    /**
+     * Met à jour une note existante.
+     *
+     * @param note Note avec les modifications à appliquer.
+     * @return La note mise à jour.
+     */
     public Note updateNote(Note note) {
-<span class="fc" id="L35">        Note updatedNote = noteRepository.save(note);</span>
-<span class="fc" id="L36">        logger.debug(&quot;Note updated : &quot;, updatedNote);</span>
-<span class="fc" id="L37">        return updatedNote;</span>
+<span class="fc" id="L57">        Note updatedNote = noteRepository.save(note);</span>
+<span class="fc" id="L58">        logger.debug(&quot;Note updated: {}&quot;, updatedNote);</span>
+<span class="fc" id="L59">        return updatedNote;</span>
     }
 
+    /**
+     * Supprime une note par son identifiant.
+     *
+     * @param id Identifiant unique de la note.
+     */
     public void deleteNoteById(String id) {
-<span class="fc" id="L41">        noteRepository.deleteById(id);</span>
-<span class="fc" id="L42">        logger.debug(&quot;Note deleted with : &quot;, id);</span>
-<span class="fc" id="L43">    }</span>
+<span class="fc" id="L68">        noteRepository.deleteById(id);</span>
+<span class="fc" id="L69">        logger.debug(&quot;Note deleted with ID: {}&quot;, id);</span>
+<span class="fc" id="L70">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
