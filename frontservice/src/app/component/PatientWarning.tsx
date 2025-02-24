@@ -1,24 +1,15 @@
-import { JSX, useEffect, useState } from "react";
-import { getDiagnosticRequest } from "../request/diagnosticRequest";
+import { JSX } from "react";
 import DiagnosticLevel from "../model/DiagnosticLevel";
 import "./PatientWarning.scss";
 
 export default function PatientWarning({
-  patientId,
+  diagnostic = "NONE",
 }: {
-  patientId: number;
+  diagnostic: DiagnosticLevel;
 }): JSX.Element {
-  const [diagnostic, setDiagnostic] = useState<DiagnosticLevel>("NONE");
-
-  useEffect(() => {
-    getDiagnosticRequest(patientId).then((level) => {
-      setDiagnostic(level);
-    });
-  }, [patientId]);
-
   switch (diagnostic) {
     case "NONE":
-      return <span className="level-none">-</span>;
+      return <span className="level-none">None</span>;
     case "EARLY":
       return <span className="level-early">Early Onset</span>;
     case "BORDERLINE":

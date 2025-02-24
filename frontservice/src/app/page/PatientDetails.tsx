@@ -11,6 +11,7 @@ import {
 import PatientForm from "./PatientForm";
 import { getDiagnosticRequest } from "../request/diagnosticRequest";
 import PatientWarning from "../component/PatientWarning";
+import DiagnosticLevel from "../model/DiagnosticLevel";
 
 export default function PatientDetails(): JSX.Element {
   const { patientId } = useParams<{ patientId: string }>() as unknown as {
@@ -18,6 +19,8 @@ export default function PatientDetails(): JSX.Element {
   };
 
   const [noteData, setNoteData] = useState<Note[]>([]);
+
+  const [diagnostic, setDiagnostic] = useState<DiagnosticLevel>("NONE");
 
   const [isEditingNode, setIsEditingNode] = useState<number | undefined>();
 
@@ -30,14 +33,14 @@ export default function PatientDetails(): JSX.Element {
           setNoteData(res);
         })
         .catch((err) => console.log(err));
+      getDiagnosticRequest(patientId).then((level) => {
+        setDiagnostic(level);
+      });
     }
   }, [patientId]);
 
   useEffect(() => {
     updateNotes();
-    getDiagnosticRequest(patientId).then((res) => {
-      console.log(res);
-    });
   }, [patientId, updateNotes]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -89,7 +92,7 @@ export default function PatientDetails(): JSX.Element {
             <tr>
               <th className="patientdetails_title">
                 Notes
-                <PatientWarning patientId={patientId} />
+                <PatientWarning diagnostic={diagnostic} />
               </th>
               <th>
                 <button
